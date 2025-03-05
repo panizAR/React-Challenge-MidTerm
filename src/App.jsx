@@ -1,4 +1,7 @@
+import { useState } from "react";
 import "./App.css";
+import ButtonProject from "./component/ButtonProject";
+import Projects from "./component/Projects";
 
 const projects = [
   {
@@ -37,9 +40,14 @@ const projects = [
 ];
 
 function App() {
+  const [isShow, setIsShow] = useState(false);
+  const handeShowProject = () => {
+    setIsShow((is) => !is);
+  };
+
   return (
     <div>
-      <h1 className="text-3xl"> سلااااااااااااااام</h1>
+      {isShow ? <Projects /> : <ButtonProject ShowProject={handeShowProject} />}
     </div>
   );
 }
