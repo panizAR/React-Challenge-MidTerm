@@ -1,7 +1,7 @@
 function ButtonProject({ ShowProject }) {
   return (
     <div>
-      <div className="text-gray-400 font-bold">لیست پروژه</div>
+      <h2 className="text-gray-500 text-xl">لیست پروژه</h2>
       <div className="flex justify-center items-center mt-14">
         <button
           className="bg-indigo-500 text-white rounded-lg px-9 py-2"
