@@ -37,7 +37,11 @@ const projects = [
 ];
 
 function App() {
-  return <h1 className="text-3xl"> React Live Code. #1</h1>;
+  return (
+    <div>
+      <h1 className="text-3xl"> سلااااااااااااااام</h1>
+    </div>
+  );
 }
 
 export default App;
