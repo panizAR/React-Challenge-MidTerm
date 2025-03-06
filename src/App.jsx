@@ -33,8 +33,8 @@ const projects = [
     },
     budget: 50000,
     tags: ["React", "Nodejs", "online shop"],
-    deadline: "2023-12-23T12:55:48.740Z",
-    createdAt: "2023-10-23T18:18:55.636Z",
+    deadline: "2025-12-23T12:55:48.740Z",
+    createdAt: "2020-10-23T18:18:55.636Z",
     updatedAt: "2024-06-02T13:37:48.468Z",
   },
   //  خودتون میتونید دیتاهای دیگه رو اضافه کنید.
@@ -42,6 +42,7 @@ const projects = [
 
 function App() {
   const [isShow, setIsShow] = useState(false);
+
   const handleShowProject = () => {
     setIsShow((is) => !is);
   };

@@ -1,4 +1,5 @@
 import {
+  useFilterSort,
   useFilterStatusDispatch,
   useProjects,
 } from "../context/ProjectProvider";
@@ -7,8 +8,20 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline";
 function ProjectTable() {
   const { data } = useProjects();
   const { state } = useFilterStatusDispatch();
+  const { sort } = useFilterSort();
 
   const filteredData = state && state.length > 0 ? state : data;
+
+  let sortedProjects = [...filteredData];
+  if (sort === "earliest") {
+    sortedProjects.sort(
+      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+    );
+  } else if (sort === "latest") {
+    sortedProjects.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+  }
 
   return (
     <div className="mt-8">
@@ -24,7 +37,7 @@ function ProjectTable() {
           </tr>
         </thead>
         <tbody className="text-center">
-          {filteredData.map((item) => (
+          {sortedProjects.map((item) => (
             <tr
               key={item._id}
               className="bg-white h-14  hover:bg-gray-200 border-y"

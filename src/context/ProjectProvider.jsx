@@ -4,16 +4,18 @@ export const ProjectContext = createContext();
 
 const FilterStatusDispatchContext = createContext(null);
 
+const FilterSort = createContext();
+
 function FilterStatusReducer(state, { type, payload }) {
   switch (type) {
     case "ALL": {
       return [...payload];
     }
     case "OPEN": {
-      return [...payload].filter((s) => s.status === "OPEN");
+      return payload.filter((s) => s.status === "OPEN");
     }
     case "CLOSED": {
-      return [...payload].filter((s) => s.status === "CLOSED");
+      return payload.filter((s) => s.status === "CLOSED");
     }
 
     default:
@@ -24,11 +26,14 @@ function FilterStatusReducer(state, { type, payload }) {
 export function ProjectProvider({ children, projects }) {
   const [data, setData] = useState([...projects]);
   const [state, dispatch] = useReducer(FilterStatusReducer, projects);
+  const [sort, setSort] = useState("earliest");
 
   return (
     <ProjectContext.Provider value={{ data, setData }}>
       <FilterStatusDispatchContext.Provider value={{ state, dispatch }}>
-        {children}
+        <FilterSort.Provider value={{ sort, setSort }}>
+          {children}
+        </FilterSort.Provider>
       </FilterStatusDispatchContext.Provider>
     </ProjectContext.Provider>
   );
@@ -44,4 +49,8 @@ export const useProjects = () => {
 
 export function useFilterStatusDispatch() {
   return useContext(FilterStatusDispatchContext);
+}
+
+export function useFilterSort() {
+  return useContext(FilterSort);
 }
