@@ -1,8 +1,14 @@
-import { useProjects } from "../context/ProjectProvider";
+import {
+  useFilterStatusDispatch,
+  useProjects,
+} from "../context/ProjectProvider";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 
 function ProjectTable() {
   const { data } = useProjects();
+  const { state } = useFilterStatusDispatch();
+
+  const filteredData = state && state.length > 0 ? state : data;
 
   return (
     <div className="mt-8">
@@ -10,7 +16,7 @@ function ProjectTable() {
         <thead>
           <tr className="h-14">
             <th>#</th>
-            <th>عنوان پروژه</th>
+            <th className="w-96">عنوان پروژه</th>
             <th>بودجه</th>
             <th>ددلاین</th>
             <th>وضعیت</th>
@@ -18,7 +24,7 @@ function ProjectTable() {
           </tr>
         </thead>
         <tbody className="text-center">
-          {data.map((item) => (
+          {filteredData.map((item) => (
             <tr
               key={item._id}
               className="bg-white h-14  hover:bg-gray-200 border-y"
@@ -26,7 +32,7 @@ function ProjectTable() {
               <td>{item._id}</td>
               <td>{item.title}</td>
               <td>{item.budget.toLocaleString("fa-IR")}</td>
-              <td>{new Date(item.deadline).toLocaleDateString("fa")}</td>
+              <td>{new Date(item.deadline).toLocaleDateString("fa-IR")}</td>
               <td>
                 {item.status === "CLOSED" ? (
                   <span className="bg-red-600 rounded-full  px-2 text-white">

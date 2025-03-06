@@ -42,13 +42,17 @@ const projects = [
 
 function App() {
   const [isShow, setIsShow] = useState(false);
-  const handeShowProject = () => {
+  const handleShowProject = () => {
     setIsShow((is) => !is);
   };
 
   return (
     <ProjectProvider projects={projects}>
-      {isShow ? <Projects /> : <ButtonProject ShowProject={handeShowProject} />}
+      {isShow ? (
+        <Projects />
+      ) : (
+        <ButtonProject showProject={handleShowProject} />
+      )}
     </ProjectProvider>
   );
 }

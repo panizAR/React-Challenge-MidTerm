@@ -6,16 +6,14 @@ const FilterStatusDispatchContext = createContext(null);
 
 function FilterStatusReducer(state, { type, payload }) {
   switch (type) {
-    case "add": {
-      return [...state, payload];
+    case "ALL": {
+      return [...payload];
     }
-    case "delete": {
-      return state.filter((s) => s.id !== payload);
+    case "OPEN": {
+      return [...payload].filter((s) => s.status === "OPEN");
     }
-    case "complete": {
-      return state.map((note) =>
-        note.id === payload ? { ...note, completed: !note.completed } : note
-      );
+    case "CLOSED": {
+      return [...payload].filter((s) => s.status === "CLOSED");
     }
 
     default:
@@ -25,7 +23,7 @@ function FilterStatusReducer(state, { type, payload }) {
 
 export function ProjectProvider({ children, projects }) {
   const [data, setData] = useState([...projects]);
-  const [state, dispatch] = useReducer(FilterStatusReducer, []);
+  const [state, dispatch] = useReducer(FilterStatusReducer, projects);
 
   return (
     <ProjectContext.Provider value={{ data, setData }}>

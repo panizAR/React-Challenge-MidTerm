@@ -1,10 +1,27 @@
-import { useFilterStatusDispatch } from "../context/ProjectProvider";
+import { useState } from "react";
+import {
+  useFilterStatusDispatch,
+  useProjects,
+} from "../context/ProjectProvider";
 
 function FilterStatus() {
-  const { state, dispatch } = useFilterStatusDispatch();
+  const { dispatch } = useFilterStatusDispatch();
+  const { data } = useProjects();
+  const [activeFilter, setActiveFilter] = useState("ALL");
 
-  const handleFilterChange = (e) => {
-    dispatch({ type: "ALL", payload: e.target.value });
+  const handleFilterStatusALL = () => {
+    dispatch({ type: "ALL", payload: data });
+    setActiveFilter("ALL");
+  };
+
+  const handleFilterStatusOPEN = () => {
+    dispatch({ type: "OPEN", payload: data });
+    setActiveFilter("OPEN");
+  };
+
+  const handleFilterStatusCLOSED = () => {
+    dispatch({ type: "CLOSED", payload: data });
+    setActiveFilter("CLOSED");
   };
 
   return (
@@ -12,16 +29,33 @@ function FilterStatus() {
       وضعیت
       <div className="bg-white rounded-lg p-1 flex w-56 justify-between">
         <button
-          value="ALL"
-          onClick={handleFilterChange}
-          className="font-medium px-4 py-1 bg-indigo-500 rounded-lg text-white "
+          onClick={handleFilterStatusALL}
+          className={`font-medium px-4 py-1 ${
+            activeFilter === "ALL" ? " bg-indigo-500 rounded-lg text-white" : ""
+          } `}
         >
           همه
         </button>
-        <button value="OPEN" className="font-medium px-4 py-1">
+
+        <button
+          onClick={handleFilterStatusOPEN}
+          className={`font-medium px-4 py-1 ${
+            activeFilter === "OPEN"
+              ? " bg-indigo-500 rounded-lg text-white"
+              : ""
+          } `}
+        >
           باز
         </button>
-        <button value="CLOSED" className="font-medium px-4 py-1">
+
+        <button
+          onClick={handleFilterStatusCLOSED}
+          className={`font-medium px-4 py-1 ${
+            activeFilter === "CLOSED"
+              ? " bg-indigo-500 rounded-lg text-white"
+              : ""
+          } `}
+        >
           بسته
         </button>
       </div>
