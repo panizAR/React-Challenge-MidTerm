@@ -1,3 +1,4 @@
+import FilterCategory from "./FilterCategory";
 import FilterSort from "./FilterSort";
 import FilterStatus from "./FilterStatus";
 
@@ -11,14 +12,10 @@ function ProjectHeader() {
 
         <FilterSort />
 
-        <div className=" bg-white rounded-lg p-1.5">
-          <select name="" id="" className="w-40">
-            <option value="">دسته بندی (همه)</option>
-          </select>
-        </div>
+        <FilterCategory />
       </div>
     </div>
-  );
+  ); 
 }
 
 export default ProjectHeader;

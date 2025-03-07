@@ -1,10 +1,9 @@
 import { createContext, useContext, useReducer, useState } from "react";
 
 export const ProjectContext = createContext();
-
-const FilterStatusDispatchContext = createContext(null);
-
-const FilterSort = createContext();
+export const FilterStatusDispatchContext = createContext(null);
+export const FilterSort = createContext();
+export const FilterCategory = createContext();
 
 function FilterStatusReducer(state, { type, payload }) {
   switch (type) {
@@ -27,12 +26,15 @@ export function ProjectProvider({ children, projects }) {
   const [data, setData] = useState([...projects]);
   const [state, dispatch] = useReducer(FilterStatusReducer, projects);
   const [sort, setSort] = useState("earliest");
+  const [category, setCategory] = useState("ALL");
 
   return (
     <ProjectContext.Provider value={{ data, setData }}>
       <FilterStatusDispatchContext.Provider value={{ state, dispatch }}>
         <FilterSort.Provider value={{ sort, setSort }}>
-          {children}
+          <FilterCategory.Provider value={{ category, setCategory }}>
+            {children}
+          </FilterCategory.Provider>
         </FilterSort.Provider>
       </FilterStatusDispatchContext.Provider>
     </ProjectContext.Provider>
@@ -53,4 +55,8 @@ export function useFilterStatusDispatch() {
 
 export function useFilterSort() {
   return useContext(FilterSort);
+}
+
+export function useFilterCategory() {
+  return useContext(FilterCategory);
 }

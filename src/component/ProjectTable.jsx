@@ -1,4 +1,5 @@
 import {
+  useFilterCategory,
   useFilterSort,
   useFilterStatusDispatch,
   useProjects,
@@ -9,6 +10,7 @@ function ProjectTable() {
   const { data } = useProjects();
   const { state } = useFilterStatusDispatch();
   const { sort } = useFilterSort();
+  const { category } = useFilterCategory();
 
   const filteredData = state && state.length > 0 ? state : data;
 
@@ -20,6 +22,17 @@ function ProjectTable() {
   } else if (sort === "latest") {
     sortedProjects.sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+  }
+
+  let categoryFiltered = [...sortedProjects];
+
+  if (category === "ALL") {
+    categoryFiltered;
+  }
+  if (category !== "ALL") {
+    categoryFiltered = categoryFiltered.filter(
+      (p) => p.category.englishTitle === category
     );
   }
 
@@ -37,7 +50,7 @@ function ProjectTable() {
           </tr>
         </thead>
         <tbody className="text-center">
-          {sortedProjects.map((item) => (
+          {categoryFiltered.map((item) => (
             <tr
               key={item._id}
               className="bg-white h-14  hover:bg-gray-200 border-y"
